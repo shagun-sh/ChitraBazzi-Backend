@@ -20,6 +20,8 @@ app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 
 // Server
-app.listen(process.env.PORT, () => {
-  console.log(`Server Running on Port ${process.env.PORT}`);
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server Running on Port ${PORT}`);
 });
