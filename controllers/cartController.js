@@ -3,7 +3,7 @@ const db = require("../config/db");
 // GET /api/cart
 exports.getCart = async (req, res) => {
   try {
-    const userId = 1;
+    const userId = req.user.id;
 
     const [items] = await db.query(
       `
@@ -38,7 +38,7 @@ exports.getCart = async (req, res) => {
 // POST /api/cart
 exports.addToCart = async (req, res) => {
   try {
-    const userId = 1;
+    const userId = req.user.id;
     const { product_id, quantity } = req.body;
 
     if (!product_id || !quantity) {

@@ -17,6 +17,8 @@ const wishlistRoutes = require("./routes/wishlistRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const customerRoutes = require("./routes/customerRoutes");
+const authRoutes = require("./routes/authRoutes");
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -30,6 +32,7 @@ app.use("/wishlist", wishlistRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/customers", customerRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/auth", authRoutes);
 
 
 // Home Route
