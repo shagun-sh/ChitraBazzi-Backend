@@ -13,8 +13,13 @@ const productRoutes = require("./routes/productRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+<<<<<<< HEAD
 const wishlistRoutes = require("./routes/wishlistRoutes");
 
+=======
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const customerRoutes = require("./routes/customerRoutes");
+>>>>>>> 483f42e9969c09a50664da6b06838699cbe72a4d
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -24,7 +29,12 @@ app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/admin", adminRoutes);
 app.use("/orders", orderRoutes);
+<<<<<<< HEAD
 app.use("/wishlist", wishlistRoutes);
+=======
+app.use("/dashboard", dashboardRoutes);
+app.use("/customers", customerRoutes);
+>>>>>>> 483f42e9969c09a50664da6b06838699cbe72a4d
 
 // Home Route
 app.get("/", (req, res) => {
