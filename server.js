@@ -11,6 +11,7 @@ require("./config/db");
 const productRoutes = require("./routes/productRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/admin", adminRoutes);
+app.use("/orders", orderRoutes);
 
 // Server
 const PORT = process.env.PORT || 5000;
