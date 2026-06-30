@@ -10,7 +10,7 @@ require("./config/db");
 // Routes
 const productRoutes = require("./routes/productRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
-
+const adminRoutes = require("./routes/adminRoutes");
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -18,6 +18,7 @@ app.use(express.json());
 // API Routes
 app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
+app.use("/admin", adminRoutes);
 
 // Server
 const PORT = process.env.PORT || 5000;
