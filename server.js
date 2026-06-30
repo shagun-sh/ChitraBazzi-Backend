@@ -1,6 +1,7 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 
@@ -12,6 +13,8 @@ const productRoutes = require("./routes/productRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes");
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -21,15 +24,18 @@ app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/admin", adminRoutes);
 app.use("/orders", orderRoutes);
+app.use("/wishlist", wishlistRoutes);
 
-// Server
-const PORT = process.env.PORT || 5000;
+// Home Route
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "ChitraBazzi Backend Running 🚀"
+    message: "ChitraBazzi Backend Running 🚀",
   });
 });
+
+// Server
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server Running on Port ${PORT}`);
