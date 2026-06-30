@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChitraBazzi Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="authModal" class="auth-modal">
+      <div class="auth-card">
+        <p class="eyebrow">Secure Access</p>
+        <h3>ChitraBazzi Admin Portal</h3>
+        <p class="auth-copy">Sign in to manage products, orders, categories, reviews, and more.</p>
+        <form id="loginForm">
+          <input id="adminEmail" type="email" placeholder="Email address" value="super@chitrabazzi.com" required />
+          <input id="adminPassword" type="password" placeholder="Password" value="admin123" required />
+          <select id="roleSelect">
+            <option value="admin">Admin</option>
+            <option value="super">Super Admin</option>
+          </select>
+          <button type="submit">Enter Dashboard</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <div class="brand-icon">✦</div>
+          <div>
+            <h1>ChitraBazzi</h1>
+            <p>Creative Studio</p>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <button class="nav-link active" data-section="dashboard">Dashboard</button>
+          <button class="nav-link" data-section="products">Products</button>
+          <button class="nav-link" data-section="categories">Categories</button>
+          <button class="nav-link" data-section="orders">Orders</button>
+          <button class="nav-link" data-section="customers">Customers</button>
+          <button class="nav-link" data-section="reviews">Reviews</button>
+          <button class="nav-link" data-section="banners">Banners</button>
+          <button class="nav-link" data-section="coupons">Coupons</button>
+          <button class="nav-link" data-section="settings">Settings</button>
+        </nav>
+
+        <div class="sidebar-card">
+          <h3>Live Campaign</h3>
+          <p>Festival collection is trending 24% this week.</p>
+          <button>View Report</button>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Admin Dashboard</p>
+            <h2 id="welcomeTitle">Welcome back, Admin</h2>
+          </div>
+          <div class="topbar-actions">
+            <span id="roleBadge" class="role-badge">Guest</span>
+            <button id="loginBtn" class="ghost-btn">Login</button>
+            <button id="logoutBtn" class="ghost-btn hidden">Logout</button>
+            <div class="profile-pill">
+              <div class="avatar">A</div>
+              <span id="profileName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <section id="superAdminBanner" class="super-admin-banner hidden">
+          <div>
+            <p class="eyebrow">Super admin</p>
+            <h3>Full platform oversight and advanced user controls are unlocked</h3>
+          </div>
+          <button>Manage Users</button>
+        </section>
+
+        <section id="dashboardSection" class="content-section active">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Overview</p>
+              <h3>Dashboard</h3>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card accent">
+              <div>
+                <p>Total Products</p>
+                <h3 id="productsCount">0</h3>
+              </div>
+              <span class="trend up">+6 this week</span>
+            </article>
+            <article class="stat-card">
+              <div>
+                <p>Total Orders</p>
+                <h3 id="ordersCount">0</h3>
+              </div>
+              <span class="trend up">+12%</span>
+            </article>
+            <article class="stat-card">
+              <div>
+                <p>Total Customers</p>
+                <h3 id="customersCount">0</h3>
+              </div>
+              <span class="trend neutral">Live</span>
+            </article>
+            <article class="stat-card">
+              <div>
+                <p>Total Revenue</p>
+                <h3 id="revenueCount">₹0</h3>
+              </div>
+              <span class="trend up">₹1.2L this month</span>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Sales</p>
+                  <h3>Monthly Sales</h3>
+                </div>
+              </div>
+              <div class="bar-chart">
+                <div class="bar-item"><span>Jan</span><div class="bar"><i style="height: 45%"></i></div></div>
+                <div class="bar-item"><span>Feb</span><div class="bar"><i style="height: 60%"></i></div></div>
+                <div class="bar-item"><span>Mar</span><div class="bar"><i style="height: 72%"></i></div></div>
+                <div class="bar-item"><span>Apr</span><div class="bar"><i style="height: 55%"></i></div></div>
+                <div class="bar-item"><span>May</span><div class="bar"><i style="height: 84%"></i></div></div>
+                <div class="bar-item"><span>Jun</span><div class="bar"><i style="height: 92%"></i></div></div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Orders</p>
+                  <h3>Orders Overview</h3>
+                </div>
+              </div>
+              <div class="overview-list">
+                <div class="overview-row"><span>Pending</span><strong>18</strong></div>
+                <div class="overview-row"><span>Processing</span><strong>12</strong></div>
+                <div class="overview-row"><span>Shipped</span><strong>27</strong></div>
+                <div class="overview-row"><span>Delivered</span><strong>64</strong></div>
+                <div class="overview-row"><span>Cancelled</span><strong>5</strong></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="module-section">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Management</p>
+                <h3>Module Access</h3>
+              </div>
+            </div>
+            <div class="module-grid">
+              <button class="module-card" data-section="products">
+                <h4>Products</h4>
+                <p>Add, edit, delete, and view product listings.</p>
+              </button>
+              <button class="module-card" data-section="orders">
+                <h4>Orders</h4>
+                <p>Track orders and update statuses from pending to delivered.</p>
+              </button>
+              <button class="module-card" data-section="customers">
+                <h4>Customers</h4>
+                <p>View customer details and order history easily.</p>
+              </button>
+              <button class="module-card" data-section="categories">
+                <h4>Categories</h4>
+                <p>Manage categories like Resin Art, Crochet, and Gifts.</p>
+              </button>
+              <button class="module-card" data-section="reviews">
+                <h4>Reviews</h4>
+                <p>Approve or remove customer reviews.</p>
+              </button>
+              <button class="module-card" data-section="banners">
+                <h4>Banners</h4>
+                <p>Upload and manage promotional banners.</p>
+              </button>
+              <button class="module-card" data-section="coupons">
+                <h4>Coupons</h4>
+                <p>Create discount coupons with expiry dates.</p>
+              </button>
+              <button class="module-card" data-section="settings">
+                <h4>Settings</h4>
+                <p>Update logo, contact info, and social links.</p>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="productsSection" class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Catalog</p>
+              <h3>Product Management</h3>
+            </div>
+          </div>
+          <div class="content-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Create</p>
+                  <h3>Add or Edit Product</h3>
+                </div>
+              </div>
+              <form id="productForm" class="form-grid">
+                <input type="hidden" id="productId" />
+                <label>
+                  Product Name
+                  <input id="productName" required />
+                </label>
+                <label>
+                  Category
+                  <input id="productCategory" required />
+                </label>
+                <label>
+                  Price
+                  <input id="productPrice" type="number" required />
+                </label>
+                <label>
+                  Stock
+                  <input id="productStock" type="number" required />
+                </label>
+                <label class="full-width">
+                  Description
+                  <textarea id="productDescription" rows="3" required></textarea>
+                </label>
+                <label class="full-width">
+                  Product Images
+                  <input id="productImages" placeholder="Enter image name or URL" />
+                </label>
+                <div class="actions full-width">
+                  <button type="submit" class="primary-btn">Save Product</button>
+                  <button type="button" id="cancelProductBtn" class="ghost-btn">Cancel</button>
+                </div>
+              </form>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Inventory</p>
+                  <h3>View Products</h3>
+                </div>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="productsTableBody"></tbody>
+              </table>
+            </article>
+          </div>
+          <div id="productDetail" class="detail-card"></div>
+        </section>
+
+        <section id="categoriesSection" class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Catalog</p>
+              <h3>Category Management</h3>
+            </div>
+          </div>
+          <div class="content-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Create</p>
+                  <h3>Add or Edit Category</h3>
+                </div>
+              </div>
+              <form id="categoryForm" class="form-grid">
+                <input type="hidden" id="categoryId" />
+                <label class="full-width">
+                  Category Name
+                  <input id="categoryName" required />
+                </label>
+                <div class="actions full-width">
+                  <button type="submit" class="primary-btn">Save Category</button>
+                  <button type="button" id="cancelCategoryBtn" class="ghost-btn">Cancel</button>
+                </div>
+              </form>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">List</p>
+                  <h3>All Categories</h3>
+                </div>
+              </div>
+              <div id="categoriesList" class="chip-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="ordersSection" class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Sales</p>
+              <h3>Order Management</h3>
+            </div>
+          </div>
+          <div class="content-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Orders</p>
+                  <h3>View Orders</h3>
+                </div>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTableBody"></tbody>
+              </table>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Details</p>
+                  <h3>Order Details</h3>
+                </div>
+              </div>
+              <div id="orderDetail" class="detail-card"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="customersSection" class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Users</p>
+              <h3>Customer Management</h3>
+            </div>
+          </div>
+          <div class="content-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Customers</p>
+                  <h3>View Customers</h3>
+                </div>
+              </div>
+              <div id="customersList" class="customer-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">History</p>
+                  <h3>Customer Details</h3>
+                </div>
+              </div>
+              <div id="customerDetail" class="detail-card"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="reviewsSection" class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Feedback</p>
+              <h3>Reviews</h3>
+            </div>
+          </div>
+          <div id="reviewsList" class="review-list"></div>
+        </section>
+
+        <section id="bannersSection" class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Marketing</p>
+              <h3>Banner Management</h3>
+            </div>
+          </div>
+          <div class="content-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Upload</p>
+                  <h3>Add Banner</h3>
+                </div>
+              </div>
+              <form id="bannerForm" class="form-grid">
+                <label>
+                  Title
+                  <input id="bannerTitle" required />
+                </label>
+                <label>
+                  Subtitle
+                  <input id="bannerSubtitle" required />
+                </label>
+                <label class="full-width">
+                  Image URL or Name
+                  <input id="bannerImage" required />
+                </label>
+                <div class="actions full-width">
+                  <button type="submit" class="primary-btn">Upload Banner</button>
+                </div>
+              </form>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Live</p>
+                  <h3>Existing Banners</h3>
+                </div>
+              </div>
+              <div id="bannersList" class="banner-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="couponsSection" class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Offers</p>
+              <h3>Coupons</h3>
+            </div>
+          </div>
+          <div class="content-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Create</p>
+                  <h3>Add Coupon</h3>
+                </div>
+              </div>
+              <form id="couponForm" class="form-grid">
+                <input type="hidden" id="couponId" />
+                <label>
+                  Coupon Code
+                  <input id="couponCode" required />
+                </label>
+                <label>
+                  Discount %
+                  <input id="couponDiscount" type="number" required />
+                </label>
+                <label>
+                  Expiry Date
+                  <input id="couponExpiry" type="date" required />
+                </label>
+                <div class="actions full-width">
+                  <button type="submit" class="primary-btn">Save Coupon</button>
+                  <button type="button" id="cancelCouponBtn" class="ghost-btn">Cancel</button>
+                </div>
+              </form>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">List</p>
+                  <h3>Active Coupons</h3>
+                </div>
+              </div>
+              <div id="couponsList" class="coupon-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="settingsSection" class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Preferences</p>
+              <h3>Settings</h3>
+            </div>
+          </div>
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Brand</p>
+                <h3>Website Settings</h3>
+              </div>
+            </div>
+            <form id="settingsForm" class="form-grid">
+              <label>
+                Website Logo
+                <input id="logoInput" />
+              </label>
+              <label>
+                Contact Number
+                <input id="phoneInput" />
+              </label>
+              <label>
+                Email Address
+                <input id="emailInput" />
+              </label>
+              <label>
+                Instagram
+                <input id="instagramInput" />
+              </label>
+              <label class="full-width">
+                Facebook
+                <input id="facebookInput" />
+              </label>
+              <div class="actions full-width">
+                <button type="submit" class="primary-btn">Save Settings</button>
+              </div>
+            </form>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
