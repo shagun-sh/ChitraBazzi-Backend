@@ -2,18 +2,20 @@ const db = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const loginAdmin = (req, res) => {
-  const { email, password } = req.body;
+// Admin Login
+const loginAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-  const sql = "SELECT * FROM Admin WHERE email = ?";
-
-  db.query(sql, [email], async (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+    const [result] = await db.query(
+      "SELECT * FROM Admin WHERE email = ?",
+      [email]
+    );
 
     if (result.length === 0) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
     }
 
     const admin = result[0];
@@ -21,7 +23,9 @@ const loginAdmin = (req, res) => {
     const match = await bcrypt.compare(password, admin.password);
 
     if (!match) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
     }
 
     const token = jwt.sign(
@@ -30,7 +34,9 @@ const loginAdmin = (req, res) => {
         role: admin.role,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      {
+        expiresIn: "1d",
+      }
     );
 
     res.status(200).json({
@@ -43,66 +49,75 @@ const loginAdmin = (req, res) => {
         role: admin.role,
       },
     });
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
-// Create Admin (Super Admin)
+
+// Create Admin
 const createAdmin = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  try {
+    const { name, email, password, role } = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  const sql =
-    "INSERT INTO Admin (name, email, password, role) VALUES (?, ?, ?, ?)";
+    const [result] = await db.query(
+      "INSERT INTO Admin (name, email, password, role) VALUES (?, ?, ?, ?)",
+      [name, email, hashedPassword, role || "admin"]
+    );
 
-  db.query(
-    sql,
-    [name, email, hashedPassword, role || "admin"],
-    (err, result) => {
-      if (err) {
-        return res.status(500).json({ message: err.message });
-      }
-
-      res.status(201).json({
-        message: "Admin created successfully",
-        adminId: result.insertId,
-      });
-    }
-  );
+    res.status(201).json({
+      message: "Admin created successfully",
+      adminId: result.insertId,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 // Get All Admins
-const getAllAdmins = (req, res) => {
-  const sql =
-    "SELECT admin_id, name, email, role FROM Admin";
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+const getAllAdmins = async (req, res) => {
+  try {
+    const [result] = await db.query(
+      "SELECT admin_id, name, email, role FROM Admin"
+    );
 
     res.status(200).json(result);
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 // Delete Admin
-const deleteAdmin = (req, res) => {
-  const { id } = req.params;
+const deleteAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  const sql = "DELETE FROM Admin WHERE admin_id = ?";
-
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+    const [result] = await db.query(
+      "DELETE FROM Admin WHERE admin_id = ?",
+      [id]
+    );
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Admin not found" });
+      return res.status(404).json({
+        message: "Admin not found",
+      });
     }
 
     res.status(200).json({
       message: "Admin deleted successfully",
     });
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 module.exports = {

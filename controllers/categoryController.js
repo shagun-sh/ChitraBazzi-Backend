@@ -1,90 +1,115 @@
 const db = require("../config/db");
 
 // Get All Categories
-const getAllCategories = (req, res) => {
-  const sql = "SELECT * FROM Category";
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+const getAllCategories = async (req, res) => {
+  try {
+    const [result] = await db.query("SELECT * FROM Category");
 
     res.status(200).json(result);
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+// Get Category By ID
+const getCategoryById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const [result] = await db.query(
+      "SELECT * FROM Category WHERE category_id = ?",
+      [id]
+    );
+
+    if (result.length === 0) {
+      return res.status(404).json({
+        message: "Category not found",
+      });
+    }
+
+    res.status(200).json(result[0]);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 // Add Category
-const addCategory = (req, res) => {
-  const { category_name, category_image } = req.body;
+const addCategory = async (req, res) => {
+  try {
+    const { category_name, category_image } = req.body;
 
-  const sql =
-    "INSERT INTO Category (category_name, category_image) VALUES (?, ?)";
-
-  db.query(sql, [category_name, category_image], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+    const [result] = await db.query(
+      "INSERT INTO Category (category_name, category_image) VALUES (?, ?)",
+      [category_name, category_image]
+    );
 
     res.status(201).json({
       message: "Category added successfully",
       categoryId: result.insertId,
     });
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
-const getCategoryById = (req, res) => {
-  const { id } = req.params;
 
-  const sql = "SELECT * FROM Category WHERE category_id = ?";
+// Update Category
+const updateCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { category_name, category_image } = req.body;
 
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
-
-    if (result.length === 0) {
-      return res.status(404).json({ message: "Category not found" });
-    }
-
-    res.status(200).json(result[0]);
-  });
-};
-const updateCategory = (req, res) => {
-  const { id } = req.params;
-  const { category_name, category_image } = req.body;
-
-  const sql =
-    "UPDATE Category SET category_name = ?, category_image = ? WHERE category_id = ?";
-
-  db.query(sql, [category_name, category_image, id], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+    const [result] = await db.query(
+      "UPDATE Category SET category_name = ?, category_image = ? WHERE category_id = ?",
+      [category_name, category_image, id]
+    );
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(404).json({
+        message: "Category not found",
+      });
     }
 
-    res.status(200).json({ message: "Category updated successfully" });
-  });
+    res.status(200).json({
+      message: "Category updated successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
-const deleteCategory = (req, res) => {
-  const { id } = req.params;
 
-  const sql = "DELETE FROM Category WHERE category_id = ?";
+// Delete Category
+const deleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+    const [result] = await db.query(
+      "DELETE FROM Category WHERE category_id = ?",
+      [id]
+    );
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(404).json({
+        message: "Category not found",
+      });
     }
 
-    res.status(200).json({ message: "Category deleted successfully" });
-  });
+    res.status(200).json({
+      message: "Category deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
-
 
 module.exports = {
   getAllCategories,
