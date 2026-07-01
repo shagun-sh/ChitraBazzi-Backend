@@ -22,7 +22,7 @@ const cartRoutes = require("./routes/cartRoutes");
 const giftRoutes = require("./routes/giftRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
-
+const couponRoutes = require("./routes/couponRoutes");
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -42,6 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/gifts", giftRoutes);
 app.use("/api/newsletter", newsletterRoutes);
+app.use("/coupons", couponRoutes);
 
 // Home Route
 app.get("/", (req, res) => {
