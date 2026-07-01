@@ -14,9 +14,10 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
-
+const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const customerRoutes = require("./routes/customerRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -29,6 +30,8 @@ app.use("/orders", orderRoutes);
 app.use("/wishlist", wishlistRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/customers", customerRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/cart", cartRoutes);
 
 // Home Route
 app.get("/", (req, res) => {

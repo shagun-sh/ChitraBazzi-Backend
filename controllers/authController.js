@@ -1,6 +1,7 @@
 // controllers/authController.js
 
-const db = require("../config/db"); // adjust path if different
+const db = require("../config/db");
+const jwt = require("jsonwebtoken");
 
 // REGISTER
 const registerUser = async (req, res) => {
@@ -80,9 +81,22 @@ const loginUser = async (req, res) => {
       });
     }
 
+    const token = jwt.sign(
+      {
+        user_id: user.user_id,
+        email: user.email
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d"
+      }
+    );
+    console.log("TOKEN:", token);
+
     res.status(200).json({
       success: true,
       message: "Login successful",
+      token,
       user: {
         user_id: user.user_id,
         full_name: user.full_name,
