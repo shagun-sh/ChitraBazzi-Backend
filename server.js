@@ -20,6 +20,9 @@ const customerRoutes = require("./routes/customerRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const giftRoutes = require("./routes/giftRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
+const bannerRoutes = require("./routes/bannerRoutes");
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -32,10 +35,14 @@ app.use("/orders", orderRoutes);
 app.use("/wishlist", wishlistRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/customers", customerRoutes);
+app.use("/reviews", reviewRoutes);
+app.use("/banners", bannerRoutes);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/cart", cartRoutes);
-app.use("/api/gifts",giftRoutes);
+app.use("/api/gifts", giftRoutes);
 app.use("/api/newsletter", newsletterRoutes);
+
 // Home Route
 app.get("/", (req, res) => {
   res.json({
