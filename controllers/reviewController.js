@@ -1,36 +1,35 @@
 const db = require("../config/db");
 
 // Get All Reviews
-const getAllReviews = (req, res) => {
-  const sql = `
-    SELECT *
-    FROM Reviews
-    ORDER BY created_at DESC
-  `;
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+const getAllReviews = async (req, res) => {
+  try {
+    const [result] = await db.query(`
+      SELECT *
+      FROM Reviews
+      ORDER BY created_at DESC
+    `);
 
     res.status(200).json(result);
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 // Get Review By ID
-const getReviewById = (req, res) => {
-  const { id } = req.params;
+const getReviewById = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  const sql = `
-    SELECT *
-    FROM Reviews
-    WHERE review_id = ?
-  `;
-
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
+    const [result] = await db.query(
+      `
+      SELECT *
+      FROM Reviews
+      WHERE review_id = ?
+      `,
+      [id]
+    );
 
     if (result.length === 0) {
       return res.status(404).json({
@@ -39,26 +38,27 @@ const getReviewById = (req, res) => {
     }
 
     res.status(200).json(result[0]);
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 // Update Review Status
-const updateReviewStatus = (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
+const updateReviewStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
 
-  const sql = `
-    UPDATE Reviews
-    SET status = ?
-    WHERE review_id = ?
-  `;
-
-  db.query(sql, [status, id], (err, result) => {
-    if (err) {
-      return res.status(500).json({
-        message: err.message,
-      });
-    }
+    const [result] = await db.query(
+      `
+      UPDATE Reviews
+      SET status = ?
+      WHERE review_id = ?
+      `,
+      [status, id]
+    );
 
     if (result.affectedRows === 0) {
       return res.status(404).json({
@@ -69,24 +69,25 @@ const updateReviewStatus = (req, res) => {
     res.status(200).json({
       message: "Review status updated successfully",
     });
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 // Delete Review
-const deleteReview = (req, res) => {
-  const { id } = req.params;
+const deleteReview = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  const sql = `
-    DELETE FROM Reviews
-    WHERE review_id = ?
-  `;
-
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json({
-        message: err.message,
-      });
-    }
+    const [result] = await db.query(
+      `
+      DELETE FROM Reviews
+      WHERE review_id = ?
+      `,
+      [id]
+    );
 
     if (result.affectedRows === 0) {
       return res.status(404).json({
@@ -97,7 +98,11 @@ const deleteReview = (req, res) => {
     res.status(200).json({
       message: "Review deleted successfully",
     });
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 module.exports = {
